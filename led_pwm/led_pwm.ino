@@ -1,23 +1,38 @@
+/*
+ * Sketch: led_pwm.ino 
+ * 
+ * Faz o controle sequencial de três LEDs usando a modulacão por largura
+ * de pulso, PWM. Mostra também uma forma alternativa de fazer um atraso
+ * em um trecho de código sem o uso da funcão delay().
+ */
 
-#define ANODO  8
+// ATENCÃO: Muito cuidado ao utilizar os pinos de I/O como
+// alimentacão. Cada pino digital pode fornecer até 40mA
+// e valores de corrente superiores a este podem danificar
+// o microcontrolador.
+#define ANODO  8    // Alimentacão dos LEDs 5V
 
-#define LED_R  9
-#define LED_G 10
-#define LED_B 11
+#define LED_R  9    // Catodo do LED vermelho
+#define LED_G 10    // Catodo do LED verde
+#define LED_B 11    // Catodo do LED azul
 
-int pwm_min = 200;
-int pwm_max = 250;
+int pwm_min = 200;  // Valor mínimo para o PWM
+int pwm_max = 250;  // Valor máximo para o PWM
 
-int inc_brilho_r = 5;
+// Passo de incremento/decremento de brilho para os LEDs
+int inc_brilho_r = 5;   
 int inc_brilho_g = 5;
 int inc_brilho_b = 5;
 
+// Guarda valores dos PWMs para os LEDs
 int brilho_led_r = pwm_min;
 int brilho_led_g = pwm_min;
 int brilho_led_b = pwm_min;
 
+// Tempo em ms entre cada passo de incremento ou decremento
 int pausa_led = 100;
 
+// Variáveis auxiliares para armazenar valores de tempo
 unsigned long pausa_led_r = 0;
 unsigned long pausa_led_g = 0;
 unsigned long pausa_led_b = 0;
@@ -25,27 +40,48 @@ unsigned long pausa_led_b = 0;
 /* ********************************************************* */
 void setup() {
 
-    pinMode(LED_R, OUTPUT);
-    digitalWrite(LED_R, HIGH);
+    pinMode(LED_R, OUTPUT);		// Inicializa pino conectado ao terminal
+    digitalWrite(LED_R, HIGH);	// catodo do LED vermelho (HIGH => desligado)
 
-    pinMode(LED_G, OUTPUT);
-    digitalWrite(LED_G, HIGH);
+    pinMode(LED_G, OUTPUT);		// Inicializa pino conectado ao terminal
+    digitalWrite(LED_G, HIGH);	// catodo do LED verde (HIGH => desligado)
     
-    pinMode(LED_B, OUTPUT);
-    digitalWrite(LED_B, HIGH);
+    pinMode(LED_B, OUTPUT);		// Inicializa pino conectado ao terminal
+    digitalWrite(LED_B, HIGH);	// catodo do LED azul (HIGH => desligado)
     
-    pinMode(ANODO, OUTPUT);
-    digitalWrite(ANODO, HIGH);
+    pinMode(ANODO, OUTPUT);		// Inicializa o pino comum dos LEDs (anodo)
+    digitalWrite(ANODO, HIGH);	// fornecendo constantemente 5V (nível HIGH).
 
 }
 
 /* ********************************************************* */
 void loop() {
 
+	/* Descomente somente uma das funcões abaixo por vez
+	 * 
+	 * brilho_com_delay() - Usa a funcão delay() ao final do trecho de
+	 * código que controla cada LED e fornece uma forma visual de perceber
+	 * o efeito do acúmulo de atrasos pelo uso sequencial de delay().
+	 * 
+	 * brilho_sem_delay() - Mostra uma forma alternativa de fazer um atraso
+	 * em um trecho de código sem o uso da funcão delay(), que é bloqueante.
+	 * Desta forma todo o trecho fora do bloco de código delimitado pelo "if"
+	 * continua executando intermitentemente, sem precisar esperar liberar
+	 * o atraso imposto por um suposto delay() dentro deste bloco. 
+	 */
+
     brilho_com_delay();
 //    brilho_sem_delay();
+
 }
 /* ********************************************************* */
+
+/* As funcões brilho_com_delay() e brilho_com_delay() controlam
+ * os LEDs R, G e B individualmente, aumentando e diminuindo o
+ * brilho dos LEDs entre os intervalos definidos nas variáveis
+ * "pwm_min" e "pwm_max" com passos de PWM definidos nas variáveis
+ * "inc_brilho_(r,g,b)"
+ */
 
 void brilho_com_delay(){
 
@@ -105,4 +141,3 @@ void brilho_sem_delay(){
             inc_brilho_b = -inc_brilho_b;
     }
 }
-
