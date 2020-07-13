@@ -18,7 +18,7 @@ ROSIE 2020
 
 * **ultrassom** - Sketch: *ultrassom.ino* - Demonstra o funcionamento de um sensor de proximidade por ultrassom,com o módulo HC-SR04. Utiliza a biblioteca "Ultrasonic" que não é padrão na IDE do Arduino.
 
-* **robo_baisco** - Sketch: *robo_basico.ino* - Este sketch apresenta as funcionalidades básicas de um robô controlado por um Arduino que usa dois motores DC. 
+* **robo_basico** - Sketch: *robo_basico.ino* - Este sketch apresenta as funcionalidades básicas de um robô controlado por um Arduino que usa dois motores DC. 
 As funcionalidades devem ser modificadas e ampliadas de acordo com o hardware disponível.
  
    - Acionamento e controle de motores DC usando uma Ponte H dupla;
